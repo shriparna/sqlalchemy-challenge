@@ -44,6 +44,22 @@ most_active_station = active_stations[0][0]
 
 session.close()
 
+# Generic function to get the min, max and avg of temperature for a given start or start and end dates
+
+def get_tob_values(start_date, end_date):
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    # Get the details from the measurement table
+    tobs = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+                filter(Measurement.date >= start_date).\
+                filter(Measurement.date <= end_date).all()
+
+    session.close()
+
+    tobs_result = list(np.ravel(tobs))
+    return(tobs_result)
+
 #################################################
 # Flask Setup
 #################################################
@@ -56,7 +72,7 @@ app = Flask(__name__)
 def welcome():
     """List all available api routes."""
     return (
-        f"Available Routes:<br/>"
+        f"<h1>Available Routes:</h1><br/>"
         f"<br/>"
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/stations<br/>"
@@ -106,7 +122,8 @@ def stations():
 @app.route('/api/v1.0/tobs')
 def tobs():
     """TOBs Route"""
-    """SELECT date, tobs FROM measurement 
+    """
+       SELECT date, tobs FROM measurement 
        WHERE date >= max_date_last_year
        AND station = most_active_station
     """
@@ -115,7 +132,7 @@ def tobs():
     session = Session(engine)
     results = session.query(Measurement.date, Measurement.tobs).\
                     filter(Measurement.date >= max_date_less_year).\
-                    filter(Measurement.station==most_active_station).all()
+                    filter(Measurement.station == most_active_station).all()
 
     # Close session
     session.close()
@@ -129,19 +146,31 @@ def tobs():
 
     return jsonify(all_tobs)
 
-@app.route('/api/v1.0/start')
-def start():
+@app.route('/api/v1.0/<start>')
+def get_start_tobs(start):
     """Start Route"""
-    return (
-        f"Start"
-    )
+    """
+       SELECT MIN(tobs), AVG(tobs), MAX(tobs)
+       FROM   measurement
+       WHERE  date > <start_date>
+    """
 
-@app.route('/api/v1.0/start/end')
-def start_end():
+    # We can put end as the current date
+    # So that we can reuse the same function
+    end = dt.datetime.today().strftime("%Y-%m/%d")
+
+    return (jsonify(get_tob_values(start, end)))
+
+@app.route('/api/v1.0/<start>/<end>')
+def get_start_end_tobs(start, end):
     """Start and End Route"""
-    return (
-        f"Start and End"
-    )
+    """
+       SELECT MIN(tobs), AVG(tobs), MAX(tobs)
+       FROM   measurement
+       WHERE  date BETWEEN <start_date> AND <end_date>
+    """
+
+    return (jsonify(get_tob_values(start, end)))
 
 if __name__ == '__main__':
     app.run(debug=True)
