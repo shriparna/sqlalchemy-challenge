@@ -42,6 +42,6 @@ Package Contents:
     - Run the file from terminal using command python app.py and make sure its running
     - Note the URL provided and use the browser to open that URL
     - The home route shows the different routes and its usage
-    - Run for each one by one
+    - Run for each route one by one
 
 <hr>
