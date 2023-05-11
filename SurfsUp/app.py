@@ -67,8 +67,6 @@ def get_tob_values(start_date, end_date):
     }
     tobs_dictionary_list.append(tobs_dict) 
 
-    print(tobs_dictionary_list)
-    
     return(tobs_dictionary_list)
 
 #################################################
@@ -100,7 +98,11 @@ def welcome():
 @app.route('/api/v1.0/precipitation')
 def prec():
     """Precipitation Route"""
-    """SELECT date, prcp FROM measurement WHERE date >= max_date_last_year"""
+    """
+        SELECT date, prcp 
+        FROM measurement 
+        WHERE date >= max_date_last_year
+    """
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
@@ -122,7 +124,11 @@ def prec():
 @app.route('/api/v1.0/stations')
 def stations():
     """Stations Route"""
-    """SELECT station FROM stations ORDER BY stations"""
+    """
+        SELECT station 
+        FROM stations 
+        ORDER BY stations
+    """
     # Create our session (link) from Python to the DB
     session = Session(engine)
     results = session.query(Station.station).order_by(Station.station).all()
@@ -170,7 +176,7 @@ def get_start_tobs(start):
     """
 
     # We can put end as the current date
-    # So that we can reuse the same function
+    # So that we can reuse the same function get_tob_values
     end = dt.datetime.today().strftime("%Y-%m/%d")
     return (jsonify(get_tob_values(start, end)))
 
@@ -183,6 +189,7 @@ def get_start_end_tobs(start, end):
        WHERE  date BETWEEN <start_date> AND <end_date>
     """
 
+    # Reusing the same function get_tob_values
     return (jsonify(get_tob_values(start, end)))
 
 if __name__ == '__main__':
