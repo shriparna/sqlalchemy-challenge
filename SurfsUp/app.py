@@ -42,6 +42,7 @@ active_stations = session.query(Measurement.station, func.count(Measurement.stat
 # Get the most active station
 most_active_station = active_stations[0][0]
 
+# Close the session
 session.close()
 
 # Generic function to get the min, max and avg of temperature for a given start or start and end dates
@@ -54,14 +55,19 @@ def get_tob_values(start_date, end_date):
                 filter(Measurement.date >= start_date).\
                 filter(Measurement.date <= end_date).all()
 
+    # Close the session
     session.close()
 
-    # Add details in the dictionary
-    tobs_dictionary_list = dict ([
-        ("TMIN" , tobs_result[0][0]),
-        ("TAVG" , tobs_result[0][1]), 
-        ("TMAX" , tobs_result[0][2])]
-    )
+    # Add details in the list of dictionary
+    tobs_dictionary_list = []
+    tobs_dict = {
+        "TMIN" : tobs_result[0][0],
+        "TAVG" : tobs_result[0][1], 
+        "TMAX" : tobs_result[0][2]
+    }
+    tobs_dictionary_list.append(tobs_dict) 
+
+    print(tobs_dictionary_list)
     
     return(tobs_dictionary_list)
 
