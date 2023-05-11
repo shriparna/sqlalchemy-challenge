@@ -79,13 +79,13 @@ def welcome():
     return (
         f"<h1>Available Routes:</h1><br/>"
         f"<ol>"
-        f"<li>/api/v1.0/precipitation</li>Gives the JSON directories with date as Key and precipitation as Value<br/><br/>"
+        f"<li>/api/v1.0/precipitation</li>Gives the list of JSON directories with date as key and precipitation as value<br/><br/>"
         f"<li>/api/v1.0/stations</li>Gives the JSON list of stations<br/><br/>"
         f"<li>/api/v1.0/tobs</li>Gives the JSON list of dictionaries with date as Key and temperature observed as Value<br/><br/>"
-        f"<li>/api/v1.0/<em>start</em></li>Gives the JSON list of dictionary of with key as TAVG for average temperature observed, "
+        f"<li>/api/v1.0/<em>start</em></li>Gives the JSON list of a dictionary with key as TAVG for average temperature observed, "
         f"TMAX for maxmium temprature observed and TMIN for minumum temperature observed from a give start date<br/>"
         f"Usage: Replace <em>start</em> with date, e.g. /api/v1.0/2016-01-01 will give the above details from this date onwards<br/></br>"
-        f"<li>/api/v1.0/<em>start</em>/<em>end</em></li>Gives the JSON list of dictionary of with key as TAVG for average temperature observed, "
+        f"<li>/api/v1.0/<em>start</em>/<em>end</em></li>Gives the JSON list of a dictionary with key as TAVG for average temperature observed, "
         f"TMAX as maxmium temprature observed and TMIN for minumum temperature observed between the given start and end date range<br/>"
         f"Usage: Replace <em>start</em> and <em>end</em> with date, e.g. /api/v1.0/2016-01-01/2016-12-31 will give the above details between these dates"
         f"</ol>"
@@ -105,7 +105,11 @@ def prec():
     session.close()
 
     # Convert into dictionary
-    all_prcp = dict(results)
+    all_prcp = []
+    for date, prcp in results:
+        prcp_dict = {}
+        prcp_dict[date] = prcp
+        all_prcp.append(prcp_dict)
 
     return jsonify(all_prcp)
 
