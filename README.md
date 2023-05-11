@@ -23,7 +23,7 @@ Package Contents:
 
 2. [climate_starter.ipynb](https://github.com/shriparna/sqlalchemy-challenge/blob/main/SurfsUp/climate_starter.ipynb) Part 1: Analyze and Explore the Climate Data Jupyter Notebook to be evaluated
 
-3. [app.py](https://github.com/shriparna/sql-challenge/blob/main/data/dept_emp.csv) Part 2: Climate App file to be evaluated
+3. [app.py](https://github.com/shriparna/sqlalchemy-challenge/blob/main/SurfsUp/app.py) Part 2: Climate App file to be evaluated
 
 <hr>
 
