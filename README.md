@@ -37,7 +37,9 @@ Package Contents:
     - Execute from top to bottom   
 
 - For app.py
-    - Run the file from terminal using app.py and make sure its running
+    - Activate PythonData using conda activate PythonData
+    - Download the file app.py
+    - Run the file from terminal using command python app.py and make sure its running
     - Note the URL provided and use the browser to open that URL
     - The home route shows the different routes and its usage
     - Run for each one by one
