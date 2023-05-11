@@ -81,7 +81,7 @@ def welcome():
         f"<ol>"
         f"<li>/api/v1.0/precipitation</li>Gives the list of JSON directories with date as key and precipitation as value<br/><br/>"
         f"<li>/api/v1.0/stations</li>Gives the JSON list of stations<br/><br/>"
-        f"<li>/api/v1.0/tobs</li>Gives the JSON list of dictionaries with date as Key and temperature observed as Value<br/><br/>"
+        f"<li>/api/v1.0/tobs</li>Gives the JSON list of dictionaries with date as key and temperature observed as value<br/><br/>"
         f"<li>/api/v1.0/<em>start</em></li>Gives the JSON list of a dictionary with key as TAVG for average temperature observed, "
         f"TMAX for maxmium temprature observed and TMIN for minumum temperature observed from a give start date<br/>"
         f"Usage: Replace <em>start</em> with date, e.g. /api/v1.0/2016-01-01 will give the above details from this date onwards<br/></br>"
